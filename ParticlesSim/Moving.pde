@@ -1,0 +1,3 @@
+interface Moving {
+  void updatePosition();
+}
