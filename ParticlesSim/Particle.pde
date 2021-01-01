@@ -17,7 +17,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed {
   }
   
   double getSpringConstant() {
-    return 0.01;
+    return 0.1;
   }
   
   void updateSpringForce() {
@@ -52,6 +52,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed {
     currVel.add(accel);
     currPos.add(currVel);
     force = new PVector(0,0);
+    currVel.mult(0.05);
   }
   
   void update() {

@@ -1,7 +1,7 @@
 import java.util.List;
 
-int width = 1280;
-int height = 720;
+int width = 1280*2;
+int height = 720*2;
 float res = 0.01;
 
 void settings() {
@@ -9,7 +9,7 @@ void settings() {
 }
 
 List<Particle> ps = new ArrayList<Particle>();
-Particle mouse = new Particle(new PVector(0, 0), 500);
+Particle mouse = new Particle(new PVector(0, 0), 100000);
 void setup() {
   for(int x = 0; x < width; x += 1/res) {
     for(int y = 0; y < height; y += 1/res) {
