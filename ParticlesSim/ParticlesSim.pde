@@ -2,7 +2,7 @@ import java.util.List;
 
 int width = 1280*2;
 int height = 720*2;
-float res = 0.01;
+float res = 0.05;
 
 void settings() {
     size(width, height);
