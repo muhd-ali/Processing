@@ -1,4 +1,5 @@
 interface Springed {
   double getSpringConstant();
-  void updateSpringForce();
+  PVector getPivotPosition();
+  PVector getMassPosition();
 }

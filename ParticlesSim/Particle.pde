@@ -1,31 +1,39 @@
-class Particle implements LiveDrawable, Moving, Charged, Springed {
+class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   PVector currPos, currVel = new PVector(0, 0);
   PVector pivotPos;
-  float charge = 1, mass = 1, electric_constant = 1;
+  float charge = 1, mass = 1, electricConstant = 100;
   PVector force = new PVector(0, 0);
   int i = 0;
+  SpringForceCalculator sCalc;
+  ChargeForceCalculator cCalc;
 
   
   Particle(PVector pos) {
     pivotPos = pos.copy();
     currPos = pos;
+    this.sCalc = new SpringForceCalculator();
+    this.cCalc = new ChargeForceCalculator();
   }
 
   Particle(PVector pos, float charge) {
     this(pos);
     this.charge = charge;
   }
+
+  void moveTowards(PVector point) {
+
+  }
   
   double getSpringConstant() {
     return 0.1;
   }
-  
-  void updateSpringForce() {
-    float dist = currPos.dist(pivotPos);
-    double sForceMag = -dist * getSpringConstant();
-    PVector sForce = currPos.copy().sub(pivotPos);
-    sForce = sForce.setMag((float) sForceMag);
-    force.add(sForce);
+
+  PVector getPivotPosition() {
+    return pivotPos;
+  }
+
+  PVector getMassPosition() {
+    return currPos;
   }
 
   double getCharge() {
@@ -36,15 +44,12 @@ class Particle implements LiveDrawable, Moving, Charged, Springed {
     return currPos.copy();
   }
 
-  void updateChargedForce(Charged c) {
-    float dist = currPos.dist(c.getPosition());
-    double eForceMag = (electric_constant * Math.abs(charge) * Math.abs(c.getCharge())) / (dist * dist);
-    PVector eForce = currPos.copy().sub(c.getPosition());
-    if (charge * c.getCharge() < 0) {
-      eForce.mult(-1);
-    }
-    eForce = eForce.setMag((float) eForceMag);
-    force.add(eForce);
+  float getElectricConstant() {
+    return electricConstant;
+  }
+
+  void addForce(PVector f) {
+    force.add(f);
   }
   
   void updatePosition() {
@@ -57,12 +62,18 @@ class Particle implements LiveDrawable, Moving, Charged, Springed {
   
   void update() {
     updatePosition();
-    updateSpringForce();
   }
   
   void draw() {
     stroke(255,255,255,255);
-    strokeWeight(10);
-    point(currPos.x, currPos.y);
+    strokeWeight(5);
+    int mode = 2;
+    switch(mode) {
+      case 1:
+        PVector forceCopy = force.copy().mult(10);
+        line(currPos.x, currPos.y, currPos.x + forceCopy.x, currPos.y + forceCopy.y);
+      case 2:
+        point(currPos.x, currPos.y);
+    }
   }
 }

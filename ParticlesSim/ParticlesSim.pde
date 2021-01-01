@@ -1,7 +1,7 @@
 import java.util.List;
 
-int width = 1280*2;
-int height = 720*2;
+int width = 1280;
+int height = 720;
 float res = 0.05;
 
 void settings() {
@@ -9,7 +9,10 @@ void settings() {
 }
 
 List<Particle> ps = new ArrayList<Particle>();
-Particle mouse = new Particle(new PVector(0, 0), 100000);
+SpringForceCalculator sCalc = new SpringForceCalculator();
+ChargeForceCalculator cCalc = new ChargeForceCalculator();
+
+Particle mouse = new Particle(new PVector(0, 0), 1000);
 void setup() {
   for(int x = 0; x < width; x += 1/res) {
     for(int y = 0; y < height; y += 1/res) {
@@ -24,9 +27,8 @@ void draw() {
   background(0);
   mouse.currPos.set(mouseX, mouseY);
   for(Particle p : ps) {
-    p.updateChargedForce(mouse);
-  }
-  for(Particle p : ps) {
+    p.addForce(cCalc.calculateFor(p, mouse));
+    p.addForce(sCalc.calculateFor(p));
     p.draw();
     p.update();
   }
