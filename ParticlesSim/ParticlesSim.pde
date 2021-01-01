@@ -9,11 +9,12 @@ void settings() {
 }
 
 List<Particle> ps = new ArrayList<Particle>();
-SpringForceCalculator sCalc = new SpringForceCalculator();
-ChargeForceCalculator cCalc = new ChargeForceCalculator();
+SpringBehavior springBehavior = new SpringBehavior();
+ChargedBehavior chargedBehavior = new ChargedBehavior();
 
 Particle mouse = new Particle(new PVector(0, 0), 1000);
 void setup() {
+  frameRate(200);
   for(int x = 0; x < width; x += 1/res) {
     for(int y = 0; y < height; y += 1/res) {
       ps.add(
@@ -27,10 +28,15 @@ void draw() {
   background(0);
   mouse.currPos.set(mouseX, mouseY);
   for(Particle p : ps) {
-    p.addForce(cCalc.calculateFor(p, mouse));
-    p.addForce(sCalc.calculateFor(p));
+    chargedBehavior.updateExternal(mouse);
+    chargedBehavior.applyTo(p);
+    springBehavior.applyTo(p);
     p.draw();
     p.update();
   }
   mouse.draw();
+
+  textSize(25);
+  fill(0, 255, 0);
+  text(String.valueOf((int)(frameRate)), 10, 25);
 }

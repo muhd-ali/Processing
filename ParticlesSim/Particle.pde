@@ -4,15 +4,11 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   float charge = 1, mass = 1, electricConstant = 100;
   PVector force = new PVector(0, 0);
   int i = 0;
-  SpringForceCalculator sCalc;
-  ChargeForceCalculator cCalc;
 
   
   Particle(PVector pos) {
     pivotPos = pos.copy();
     currPos = pos;
-    this.sCalc = new SpringForceCalculator();
-    this.cCalc = new ChargeForceCalculator();
   }
 
   Particle(PVector pos, float charge) {
