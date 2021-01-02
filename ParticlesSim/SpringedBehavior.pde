@@ -1,4 +1,4 @@
-class SpringBehavior extends Behavior<Springed> {
+class SpringedBehavior extends Behavior<Springed> {
   void applyTo(Springed system) {
     float dist = system.getMassPosition().dist(system.getPivotPosition());
     double forceMag = -dist * system.getSpringConstant();

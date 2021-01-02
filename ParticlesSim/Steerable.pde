@@ -1,3 +1,5 @@
-interface Steerable {
-  void moveTowards(PVector point);
+interface Steerable extends Forced {
+  PVector getPosition();
+  PVector getTargetPosition();
+  void updateTargetPosition(PVector targetPos);
 }

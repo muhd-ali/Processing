@@ -1,6 +1,6 @@
 class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   PVector currPos, currVel = new PVector(0, 0);
-  PVector pivotPos;
+  PVector pivotPos, targetPos;
   float charge = 1, mass = 1, electricConstant = 100;
   PVector force = new PVector(0, 0);
   int i = 0;
@@ -8,16 +8,13 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   
   Particle(PVector pos) {
     pivotPos = pos.copy();
+    targetPos = pos.copy();
     currPos = pos;
   }
 
   Particle(PVector pos, float charge) {
     this(pos);
     this.charge = charge;
-  }
-
-  void moveTowards(PVector point) {
-
   }
   
   double getSpringConstant() {
@@ -40,12 +37,28 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
     return currPos.copy();
   }
 
+  PVector getVelocity() {
+    return currVel.copy();
+  }
+
   float getElectricConstant() {
     return electricConstant;
   }
 
+  PVector getTargetPosition() {
+    return targetPos.copy();
+  }
+
+  void updateTargetPosition(PVector targetPos) {
+    this.targetPos = targetPos;
+  }
+
   void addForce(PVector f) {
     force.add(f);
+  }
+
+  void addVelocity(PVector vel) {
+    currVel.add(vel);
   }
   
   void updatePosition() {
@@ -53,7 +66,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
     currVel.add(accel);
     currPos.add(currVel);
     force = new PVector(0,0);
-    currVel.mult(0.05);
+    currVel.mult(0.05); // damping effect
   }
   
   void update() {
