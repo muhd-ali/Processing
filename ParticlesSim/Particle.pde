@@ -76,7 +76,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
     currVel.add(accel);
     currPos.add(currVel);
     force = new PVector(0,0);
-    currVel.mult(0.05); // damping effect
+    currVel.mult(0.1); // damping effect
   }
   
   void update() {
@@ -84,15 +84,17 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   }
   
   void draw() {
-    strokeWeight(5);
+    strokeWeight(10);
     stroke(255, 255, 255);
-    int mode = 2;
-    float col;
+    int mode = 3;
+    float col1, col2, col3, col4;
+    col2 = (int)map(getPivotPosition().x, 0, width, 255, 0);
+    col3 = (int)map(getPivotPosition().y, 0, height, 255, 0);
     PVector vector;
     switch(mode) {
       case 1:
-      col = (int)map(force.mag(), 0, 1, 255, 0);
-      stroke(255, col, col);
+      col1 = (int)map(force.mag(), 0, 1, 255, 0);
+      stroke(col1, col2, col3);
       vector = force.copy().mult(10).limit(50);
       line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
       break;
@@ -101,8 +103,9 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
       break;
       case 3:
       vector = currPos.copy().sub(getPivotPosition());
-      col = (int)map(vector.mag(), 0, 50, 255, 0);
-      stroke(255, col, col);
+      col1 = (int)map(vector.heading(), 0, 2 * PI, 255, 0);
+      col4 = (int)map(vector.mag(), 0, 50, 75, 150);
+      stroke(col1, col2, col3, col4);
       line(getPivotPosition().x, getPivotPosition().y, currPos.x, currPos.y);
       break;
     }

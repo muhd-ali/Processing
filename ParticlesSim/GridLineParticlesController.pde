@@ -9,7 +9,7 @@ class GridLineParticlesController {
         Particle particle = new ParticleBuilder()
          .currPos(new PVector(x, y))
          .pivotPos(new PVector(x, y))
-         .charge(5)
+         .charge(1)
          .build();
         pair.add(particle);
         particle = new ParticleBuilder()

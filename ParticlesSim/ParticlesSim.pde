@@ -12,7 +12,7 @@ List<Particle> gridParticles = new ArrayList<Particle>();
 SpringedBehavior springedBehavior = new SpringedBehavior();
 ChargedBehavior chargedBehavior = new ChargedBehavior();
 SteerableBehavior steerableBehavior = new SteerableBehavior();
-RandomParticlesController rpc = new RandomParticlesController(0);
+RandomParticlesController rpc = new RandomParticlesController(5);
 GridPointParticlesController gpc = new GridPointParticlesController();
 
 Particle mouse = new ParticleBuilder()
