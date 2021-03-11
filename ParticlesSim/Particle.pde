@@ -14,6 +14,11 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
     }
   }
   
+  void setLine(PVector pivotPos, PVector currPos) {
+    this.currPos = currPos.copy();
+    this.pivotPos = pivotPos.copy();
+  }
+  
   double getSpringConstant() {
     return 0.1;
   }
@@ -82,18 +87,21 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
     strokeWeight(5);
     stroke(255, 255, 255);
     int mode = 3;
-    float col = (int)map(force.mag(), 0, 1, 255, 0);
-    PVector normalized;
+    float col;
+    PVector vector;
     switch(mode) {
       case 1:
+      col = (int)map(force.mag(), 0, 1, 255, 0);
       stroke(255, col, col);
-      normalized = force.copy().mult(10).limit(50);
-      line(currPos.x, currPos.y, currPos.x + normalized.x, currPos.y + normalized.y);
+      vector = force.copy().mult(10).limit(50);
+      line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
       break;
       case 2:
       point(currPos.x, currPos.y);
       break;
       case 3:
+      vector = currPos.copy().sub(getPivotPosition());
+      col = (int)map(vector.mag(), 0, 50, 255, 0);
       stroke(255, col, col);
       line(getPivotPosition().x, getPivotPosition().y, currPos.x, currPos.y);
       break;

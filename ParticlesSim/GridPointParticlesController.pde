@@ -1,7 +1,7 @@
-class GridParticlesController {
+class GridPointParticlesController {
   List<Particle> particles = new ArrayList<Particle>();
   
-  GridParticlesController() {
+  GridPointParticlesController() {
     for (int x = 0; x < width; x += 1 / res) {
       for (int y = 0; y < height; y += 1 / res) {
         Particle particle = new ParticleBuilder()

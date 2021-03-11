@@ -13,11 +13,11 @@ SpringedBehavior springedBehavior = new SpringedBehavior();
 ChargedBehavior chargedBehavior = new ChargedBehavior();
 SteerableBehavior steerableBehavior = new SteerableBehavior();
 RandomParticlesController rpc = new RandomParticlesController(0);
-GridParticlesController gpc = new GridParticlesController();
+GridLineParticlesController gpc = new GridLineParticlesController();
 
 Particle mouse = new ParticleBuilder()
  .currPos(new PVector(0, 0))
- .charge(1000)
+ .charge(50)
  .build();
 
 void setup() {
@@ -32,6 +32,7 @@ void draw() {
   mouse.draw();
   rpc.draw();	
   gpc.draw(rpc);	
+  gpc.update(rpc);	
   textSize(25);
   fill(0, 255, 0);
   text(String.valueOf((int)(frameRate)), 10, 25);
