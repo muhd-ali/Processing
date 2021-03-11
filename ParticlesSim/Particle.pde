@@ -86,7 +86,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   void draw() {
     strokeWeight(5);
     stroke(255, 255, 255);
-    int mode = 3;
+    int mode = 2;
     float col;
     PVector vector;
     switch(mode) {

@@ -7,6 +7,7 @@ class GridPointParticlesController {
         Particle particle = new ParticleBuilder()
          .currPos(new PVector(x, y))
          .pivotPos(new PVector(x, y))
+         .charge(10)
          .build();
         particles.add(particle);
       }
@@ -22,13 +23,13 @@ class GridPointParticlesController {
         chargedBehavior.applyTo(gp);
       }
       springedBehavior.applyTo(gp);
-      gp.update();
     }
   }
   
   void draw() {
     for (Particle gp : particles) {
       gp.draw();
+      gp.update();
     }
   }
 }
