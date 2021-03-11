@@ -13,7 +13,7 @@ class GridPointParticlesController {
     }
   }
   
-  void draw(RandomParticlesController rpc) {
+  void update(RandomParticlesController rpc) {
     for (Particle gp : particles) {
       chargedBehavior.updateExternal(mouse);
       chargedBehavior.applyTo(gp);
@@ -22,8 +22,13 @@ class GridPointParticlesController {
         chargedBehavior.applyTo(gp);
       }
       springedBehavior.applyTo(gp);
-      gp.draw();
       gp.update();
+    }
+  }
+  
+  void draw() {
+    for (Particle gp : particles) {
+      gp.draw();
     }
   }
 }

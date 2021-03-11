@@ -9,7 +9,7 @@ class GridLineParticlesController {
         Particle particle = new ParticleBuilder()
          .currPos(new PVector(x, y))
          .pivotPos(new PVector(x, y))
-         .charge(1)
+         .charge(5)
          .build();
         pair.add(particle);
         particle = new ParticleBuilder()
@@ -42,7 +42,7 @@ class GridLineParticlesController {
     }
   }
   
-  void draw(RandomParticlesController rpc) {
+  void draw() {
     for (int i = 0; i < lines.size(); i++) {
       Particle line = lines.get(i);
       List<Particle> pair = edgeParticles.get(i);
@@ -51,7 +51,6 @@ class GridLineParticlesController {
     }
     for (List < Particle > pair : edgeParticles) {
       for (Particle gp : pair) {
-        // gp.draw();
         gp.update();
       }
     }

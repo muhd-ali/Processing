@@ -8,7 +8,7 @@ class RandomParticlesController {
     for (int i = 0; i < numParticles; i++) {
 			Particle particle = new ParticleBuilder()
          .currPos(new PVector(0, 0))
-         .charge(random(10, 5000))
+         .charge(random(1, 100))
          .build();
 			particles.add(particle);
     }
