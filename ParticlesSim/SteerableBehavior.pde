@@ -6,6 +6,6 @@ class SteerableBehavior extends Behavior<Steerable> {
 	void applyTo(Steerable body) {
 		PVector currPos = body.getPosition();
 		PVector forceToAdd = body.getTargetPosition().sub(currPos);
-		body.addForce(forceToAdd.mult(0.01));
+		body.addForce(forceToAdd.mult(0.05));
 	}
 }

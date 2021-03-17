@@ -86,7 +86,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   void draw() {
     strokeWeight(10);
     stroke(255, 255, 255);
-    int mode = 8;
+    int mode = 6;
     float col1 = 255, col2 = 255, col3 = 255, col4 = 255;
     col2 = (int)map(getPivotPosition().x, 0, width, 255, 0);
     col3 = (int)map(getPivotPosition().y, 0, height, 255, 0);
@@ -135,7 +135,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
       line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x, currPos.y + vector1.y);      
       break;
       case 6:
-      vector = force.copy().mult(10).limit(50);
+      vector = currPos.copy().sub(getPivotPosition()).mult(10).limit(100);
       col1 = (int)map(vector.heading(), 0, 2 * PI, 255, 0);
       stroke(col1, col2, col3, col4);
       line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
@@ -148,7 +148,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
       line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x, currPos.y + vector1.y);      
       break;
       case 7:
-      vector = currPos.copy().sub(getPivotPosition()).setMag(30);
+      vector = currPos.copy().sub(getPivotPosition()).setMag(100);
       col1 = (int)map(vector.heading(), 0, 2 * PI, 255, 0);
       stroke(col1, col2, col3, col4);
       line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
@@ -161,7 +161,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
       line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x, currPos.y + vector1.y);      
       break;
       case 8:
-      vector = force.copy().setMag(30);
+      vector = force.copy().setMag(150);
       col1 = (int)map(vector.heading(), 0, 2 * PI, 255, 0);
       stroke(col1, col2, col3, col4);
       line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
@@ -172,6 +172,22 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
       col4 = (int)map(vector.mag(), 0, 50, 75, 150);
       stroke(col1, col2, col3, col4);
       line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x, currPos.y + vector1.y);      
+      break;
+      case 9:
+      vector = force.copy().setMag(150);
+      col1 = (int)map(vector.heading(), 0, 2 * PI, 255, 0);
+      col2 = (int)map(force.mag(), 0, 1, 255, 0);
+      col4 = (int)map(vector.mag(), 0, 50, 75, 150);
+      stroke(col1, col2, col3, col4);
+      circle(currPos.x, currPos.y, (int)map(force.mag(), 0, 1, 0, 30));
+      break;
+      case 10:
+      vector = currPos.copy().sub(getPivotPosition()).limit(100);
+      col1 = (int)map(vector.heading(), 0, 2 * PI, 255, 0);
+      col2 = (int)map(force.mag(), 0, 1, 255, 0);
+      col4 = (int)map(vector.mag(), 0, 50, 75, 150);
+      stroke(col1, col2, col3, col4);
+      circle(getPivotPosition().x, getPivotPosition().y, (int)map(vector.mag(), 0, 100, 0, 75));
       break;
     }
   }
