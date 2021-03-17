@@ -2,7 +2,7 @@ import java.util.List;
 
 int width = 1280;
 int height = 720;
-float res = 0.05;
+float res = 0.02;
 
 void settings() {
   size(width, height);
@@ -12,12 +12,12 @@ List<Particle> gridParticles = new ArrayList<Particle>();
 SpringedBehavior springedBehavior = new SpringedBehavior();
 ChargedBehavior chargedBehavior = new ChargedBehavior();
 SteerableBehavior steerableBehavior = new SteerableBehavior();
-RandomParticlesController rpc = new RandomParticlesController(5);
+RandomParticlesController rpc = new RandomParticlesController(0);
 GridPointParticlesController gpc = new GridPointParticlesController();
 
 Particle mouse = new ParticleBuilder()
  .currPos(new PVector(0, 0))
- .charge(50)
+ .charge(10)
  .build();
 
 void setup() {
