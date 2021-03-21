@@ -7,7 +7,7 @@ class GridPointParticlesController {
         Particle particle = new ParticleBuilder()
          .currPos(new PVector(x, y))
          .pivotPos(new PVector(x, y))
-         .charge(10)
+         .charge(50)
          .build();
         particles.add(particle);
       }
