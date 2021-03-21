@@ -84,9 +84,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable {
   }
   
   void draw() {
-    ParticleDrawer particleDrawer = new PointParticleDrawer();
-    ColorProvider colorProvider = new WhiteColorProvider();
-    particleDrawer.draw(this, colorProvider);
+    
   }
   
   //void draw() {
