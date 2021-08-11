@@ -12,7 +12,7 @@ import venom.controller.RandomParticlesController;
 
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
-    public float res = 0.01f;
+    public float res = 0.05f;
     List<Particle> gridParticles;
     public SpringedBehavior springedBehavior;
     public ChargedBehavior chargedBehavior;
@@ -26,7 +26,7 @@ public class ParticleSim extends PApplet {
     }
 
     public void settings() {
-        fullScreen();
+        size(1920, 1080, P2D);
     }
 
     public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).charge(500).build();
