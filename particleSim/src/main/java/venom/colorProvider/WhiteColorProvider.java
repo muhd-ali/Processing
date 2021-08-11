@@ -1,6 +1,8 @@
-package venom;
+package venom.colorProvider;
 
-class WhiteColorProvider implements ColorProvider<Object> {
+import venom.contract.ColorProvider;
+
+public class WhiteColorProvider<T> implements ColorProvider<T> {
     public float col1() {
         return 255;
     }
@@ -17,6 +19,6 @@ class WhiteColorProvider implements ColorProvider<Object> {
         return 255;
     }
 
-    public void setDataObject(Object obj) {
+    public void setDataObject(T obj) {
     }
 }

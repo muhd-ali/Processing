@@ -1,6 +1,9 @@
-package venom;
+package venom.colorProvider;
 
-abstract class ParticleColorProvider implements ColorProvider<Particle> {
+import venom.Particle;
+import venom.contract.ColorProvider;
+
+public abstract class ParticleColorProvider implements ColorProvider<Particle> {
     Particle particle;
 
     public abstract float col1();

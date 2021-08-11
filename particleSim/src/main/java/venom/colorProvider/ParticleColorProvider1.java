@@ -1,11 +1,13 @@
-package venom;
+package venom.colorProvider;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
+import venom.ParticleSim;
 
-class ParticleColorProvider1 extends ParticleColorProvider {
+public class ParticleColorProvider1 extends ParticleColorProvider {
     public float col1() {
-        return (int) PApplet.map(particle.force.mag(), 0, 1, 255, 0);
+        return (int) PApplet.map(particle.getForce().heading(), -PConstants.PI, PConstants.PI, 255, 0);
     }
 
     public float col2() {
@@ -17,7 +19,7 @@ class ParticleColorProvider1 extends ParticleColorProvider {
     }
 
     public float col4() {
-        PVector vector = particle.currPos.copy().sub(particle.getPivotPosition());
+        PVector vector = particle.getPosition().sub(particle.getPivotPosition());
         return (int) PApplet.map(vector.mag(), 0, 50, 75, 150);
     }
 }

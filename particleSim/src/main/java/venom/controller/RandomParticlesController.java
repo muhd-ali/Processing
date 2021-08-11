@@ -1,25 +1,28 @@
-package venom;
+package venom.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import processing.core.PVector;
+import venom.Particle;
+import venom.ParticleSim;
+import venom.behavior.SteerableBehavior;
 
-class RandomParticlesController {
+public class RandomParticlesController {
     int numParticles;
-    List<Particle> particles = new ArrayList<Particle>();
+    List<Particle> particles = new ArrayList<>();
     SteerableBehavior steerableBehavior = new SteerableBehavior();
 
-    RandomParticlesController(int numParticles) {
+    public RandomParticlesController(int numParticles) {
         this.numParticles = numParticles;
         for (int i = 0; i < numParticles; i++) {
-            Particle particle = new ParticleBuilder().currPos(new PVector(0, 0))
+            Particle particle = Particle.builder().currPos(new PVector(0, 0))
                     .charge(ParticleSim.singleton.random(1, 100)).build();
             particles.add(particle);
         }
     }
 
-    void draw() {
+    public void draw() {
         for (Particle p : particles) {
             if (steerableBehavior.distanceToTargetFor(p) < 10) {
                 p.updateTargetPosition(new PVector(ParticleSim.singleton.random(ParticleSim.singleton.width),

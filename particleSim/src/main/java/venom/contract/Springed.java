@@ -1,8 +1,8 @@
-package venom;
+package venom.contract;
 
 import processing.core.PVector;
 
-interface Springed extends Forced {
+public interface Springed extends Forced {
     double getSpringConstant();
 
     PVector getPivotPosition();

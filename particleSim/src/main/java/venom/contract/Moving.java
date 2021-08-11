@@ -1,8 +1,8 @@
-package venom;
+package venom.contract;
 
 import processing.core.PVector;
 
-interface Moving {
+public interface Moving {
     void updatePosition();
 
     PVector getVelocity();

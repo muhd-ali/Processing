@@ -1,4 +1,4 @@
-package venom;
+package venom.contract;
 
 import processing.core.PVector;
 

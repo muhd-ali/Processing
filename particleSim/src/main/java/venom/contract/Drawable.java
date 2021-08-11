@@ -1,4 +1,4 @@
-package venom;
+package venom.contract;
 
 interface Drawable {
 	void draw();

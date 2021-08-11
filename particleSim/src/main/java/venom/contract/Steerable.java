@@ -1,8 +1,8 @@
-package venom;
+package venom.contract;
 
 import processing.core.PVector;
 
-interface Steerable extends Forced {
+public interface Steerable extends Forced {
     PVector getPosition();
 
     PVector getTargetPosition();

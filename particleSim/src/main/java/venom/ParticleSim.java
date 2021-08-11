@@ -4,19 +4,24 @@ import java.util.List;
 import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PVector;
+import venom.behavior.ChargedBehavior;
+import venom.behavior.SpringedBehavior;
+import venom.behavior.SteerableBehavior;
+import venom.controller.GridPointParticlesController;
+import venom.controller.RandomParticlesController;
 
-class ParticleSim extends PApplet {
+public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
-    float res = 0.02f;
+    public float res = 0.01f;
     List<Particle> gridParticles;
-    SpringedBehavior springedBehavior;
-    ChargedBehavior chargedBehavior;
+    public SpringedBehavior springedBehavior;
+    public ChargedBehavior chargedBehavior;
     SteerableBehavior steerableBehavior;
     RandomParticlesController rpc;
     GridPointParticlesController gpc;
 
     public static void main(String[] args) {
-        String[] processingArgs = {"ParticleSim"};
+        String[] processingArgs = { "ParticleSim" };
         PApplet.runSketch(processingArgs, singleton);
     }
 
@@ -24,11 +29,11 @@ class ParticleSim extends PApplet {
         fullScreen();
     }
 
-    Particle mouse = new ParticleBuilder().currPos(new PVector(0, 0)).charge(500).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).charge(500).build();
 
     public void setup() {
         frameRate(120);
-        gridParticles = new ArrayList<Particle>();
+        gridParticles = new ArrayList<>();
         springedBehavior = new SpringedBehavior();
         chargedBehavior = new ChargedBehavior();
         steerableBehavior = new SteerableBehavior();
