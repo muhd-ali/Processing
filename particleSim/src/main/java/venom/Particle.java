@@ -82,7 +82,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
     public void draw() {
         ParticleSim.singleton.strokeWeight(10);
         ParticleSim.singleton.stroke(255, 255, 255);
-        int mode = 1;
+        String mode = "gravitational";
         float col1, col2, col3, col4 = 255;
         col2 = (int) ParticleSim.map(getPivotPosition().x, 0, ParticleSim.singleton.width, 255, 0);
         col3 = (int) ParticleSim.map(getPivotPosition().y, 0, ParticleSim.singleton.height, 255, 0);
@@ -90,19 +90,22 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
         ParticleColorProvider colorProvider = new ParticleColorProvider1();
         colorProvider.setDataObject(this);
         switch (mode) {
-        case 1:
+        case "points":
             new PointDrawer().draw(getPosition(), new WhiteColorProvider());
             break;
-        case 2:
+        case "gravitational":
+            new GravitationalParticleDrawer().draw(this, colorProvider);
+            break;
+        case "2":
             new DistortingPointParticleDrawer().draw(this, colorProvider);
             break;
-        case 3:
+        case "3":
             new HairParticleDrawer().draw(this, colorProvider);
             break;
-        case 4:
+        case "4":
             new DistortingTriangleParticleDrawer().draw(this, colorProvider);
             break;
-        case 5:
+        case "5":
             vector = currPos.copy().sub(getPivotPosition());
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
@@ -116,7 +119,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             ParticleSim.singleton.line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x,
                     currPos.y + vector1.y);
             break;
-        case 6:
+        case "6":
             vector = currPos.copy().sub(getPivotPosition()).mult(10).limit(100);
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
@@ -130,7 +133,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             ParticleSim.singleton.line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x,
                     currPos.y + vector1.y);
             break;
-        case 7:
+        case "7":
             vector = force.copy().setMag(150);
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
@@ -144,7 +147,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             ParticleSim.singleton.line(currPos.x + vector.x, currPos.y + vector.y, currPos.x + vector1.x,
                     currPos.y + vector1.y);
             break;
-        case 8:
+        case "8":
             vector = force.copy().setMag(150);
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             col2 = (int) ParticleSim.map(force.mag(), 0, 1, 255, 0);
@@ -152,7 +155,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
             ParticleSim.singleton.circle(currPos.x, currPos.y, (int) ParticleSim.map(force.mag(), 0, 1, 0, 10));
             break;
-        case 9:
+        case "9":
             vector = currPos.copy().sub(getPivotPosition()).limit(125);
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             col4 = (int) ParticleSim.map(vector.mag(), 0, 50, 75, 150);

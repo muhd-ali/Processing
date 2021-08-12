@@ -7,20 +7,23 @@ import processing.core.PVector;
 import venom.Particle;
 import venom.ParticleSim;
 import venom.behavior.ExternalInteractionBehavior;
+import venom.behavior.SpringedBehavior;
 
 public class GridPointParticlesController {
     private final ExternalInteractionBehavior<venom.contract.Gravitational> externalInteractionBehavior;
+    private final SpringedBehavior defaultBehavior;
     List<Particle> particles = new ArrayList<>();
 
-    public GridPointParticlesController(ExternalInteractionBehavior<venom.contract.Gravitational> externalInteractionBehavior) {
+    public GridPointParticlesController(ExternalInteractionBehavior<venom.contract.Gravitational> externalInteractionBehavior, SpringedBehavior defaultBehavior) {
         for (int x = 0; x < ParticleSim.singleton.width; x += 1 / ParticleSim.singleton.res) {
             for (int y = 0; y < ParticleSim.singleton.height; y += 1 / ParticleSim.singleton.res) {
-                Particle particle = Particle.builder().currPos(new PVector(x, y)).pivotPos(new PVector(x, y)).charge(50)
+                Particle particle = Particle.builder().currPos(new PVector(x, y)).pivotPos(new PVector(x, y)).mass(5).charge(50)
                         .build();
                 particles.add(particle);
             }
         }
         this.externalInteractionBehavior = externalInteractionBehavior;
+        this.defaultBehavior = defaultBehavior;
     }
 
     public void update(RandomParticlesController rpc) {
@@ -31,7 +34,8 @@ public class GridPointParticlesController {
                 externalInteractionBehavior.updateExternal(rp);
                 externalInteractionBehavior.applyTo(gp);
             }
-            ParticleSim.singleton.springedBehavior.applyTo(gp);
+            if (defaultBehavior != null)
+            defaultBehavior.applyTo(gp);
         }
     }
 
