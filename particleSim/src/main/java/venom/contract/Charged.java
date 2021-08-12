@@ -1,11 +1,7 @@
 package venom.contract;
 
-import processing.core.PVector;
-
 public interface Charged extends Forced {
-    double getCharge();
+    float ELECTRIC_CONSTANT = 100;
 
-    float getElectricConstant();
-
-    PVector getPosition();
+    float getCharge();
 }

@@ -16,7 +16,7 @@ public class RandomParticlesController {
     public RandomParticlesController(int numParticles) {
         this.numParticles = numParticles;
         for (int i = 0; i < numParticles; i++) {
-            Particle particle = Particle.builder().currPos(new PVector(0, 0))
+            Particle particle = Particle.builder().mass(100).currPos(new PVector(0, 0))
                     .charge(ParticleSim.singleton.random(1, 100)).build();
             particles.add(particle);
         }

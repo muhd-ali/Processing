@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PVector;
 import venom.behavior.ChargedBehavior;
+import venom.behavior.GravitationalBehavior;
 import venom.behavior.SpringedBehavior;
 import venom.behavior.SteerableBehavior;
 import venom.controller.GridPointParticlesController;
@@ -12,10 +13,11 @@ import venom.controller.RandomParticlesController;
 
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
-    public float res = 0.05f;
+    public float res = 0.01f;
     List<Particle> gridParticles;
     public SpringedBehavior springedBehavior;
     public ChargedBehavior chargedBehavior;
+    public GravitationalBehavior gravitationalBehavior;
     SteerableBehavior steerableBehavior;
     RandomParticlesController rpc;
     GridPointParticlesController gpc;
@@ -26,19 +28,20 @@ public class ParticleSim extends PApplet {
     }
 
     public void settings() {
-        size(1920, 1080, P2D);
+        size(1920, 1080, P3D);
     }
 
-    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).charge(500).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).charge(200).build();
 
     public void setup() {
-        frameRate(120);
+        frameRate(144);
         gridParticles = new ArrayList<>();
         springedBehavior = new SpringedBehavior();
         chargedBehavior = new ChargedBehavior();
+        gravitationalBehavior = new GravitationalBehavior();
         steerableBehavior = new SteerableBehavior();
-        rpc = new RandomParticlesController(0);
-        gpc = new GridPointParticlesController();
+        rpc = new RandomParticlesController(5);
+        gpc = new GridPointParticlesController(singleton.gravitationalBehavior);
     }
 
     public void draw() {
