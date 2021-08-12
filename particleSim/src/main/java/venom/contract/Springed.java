@@ -3,7 +3,11 @@ package venom.contract;
 import processing.core.PVector;
 
 public interface Springed extends Forced {
-    double SPRING_CONSTANT = 0.1;
+    float SPRING_CONSTANT = 0.1f;
 
-    PVector getPivotPosition();
+    float DAMPING_CONSTANT = 1;
+
+    PVector getAnchorPosition();
+
+    PVector getVelocity();
 }

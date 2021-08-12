@@ -1,7 +1,7 @@
 package venom.contract;
 
 public interface Gravitational extends Forced {
-    float GRAVITATIONAL_CONSTANT = 100;
+    float GRAVITATIONAL_CONSTANT = 10;
 
     float getMass();
 }

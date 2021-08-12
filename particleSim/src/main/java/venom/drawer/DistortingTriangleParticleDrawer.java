@@ -5,12 +5,10 @@ import venom.Particle;
 import venom.ParticleSim;
 import venom.contract.ColorProvider;
 
-import java.util.List;
-
 public class DistortingTriangleParticleDrawer extends ParticleDrawer {
     public void draw(Particle particle, ColorProvider<Particle> colorProvider) {
         colorProvider.setStroke();
-        PVector vector = particle.getPosition().sub(particle.getPivotPosition());
+        PVector vector = particle.getPosition().sub(particle.getAnchorPosition());
         ParticleSim.singleton.line(particle.getPosition().x, particle.getPosition().y, particle.getPosition().x + vector.x, particle.getPosition().y + vector.y);
         PVector vector1 = particle.getForce().mult(10).limit(50);
 //        col2 = (int) ParticleSim.map(particle.getForce().mag(), 0, 1, 255, 0);

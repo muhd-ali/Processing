@@ -11,15 +11,15 @@ public class ParticleColorProvider1 extends ParticleColorProvider {
     }
 
     public float col2() {
-        return (int) PApplet.map(particle.getPivotPosition().x, 0, ParticleSim.singleton.width, 255, 0);
+        return (int) PApplet.map(particle.getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
     }
 
     public float col3() {
-        return (int) PApplet.map(particle.getPivotPosition().y, 0, ParticleSim.singleton.height, 255, 0);
+        return (int) PApplet.map(particle.getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
     }
 
     public float col4() {
-        PVector vector = particle.getPosition().sub(particle.getPivotPosition());
+        PVector vector = particle.getPosition().sub(particle.getAnchorPosition());
         return (int) PApplet.map(vector.mag(), 0, 50, 75, 150);
     }
 }

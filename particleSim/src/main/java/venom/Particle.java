@@ -2,6 +2,7 @@ package venom;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import processing.core.PVector;
 import venom.colorProvider.ParticleColorProvider;
 import venom.colorProvider.ParticleColorProvider1;
@@ -12,7 +13,8 @@ import venom.drawer.*;
 @Builder
 public
 class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gravitational {
-    private PVector pivotPos, targetPos;
+    private PVector anchorPos, targetPos;
+    @Setter
     PVector currPos;
     @Builder.Default
     PVector currVel = new PVector(0, 0);
@@ -22,16 +24,16 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
     @Builder.Default
     private PVector force = new PVector(0, 0);
 
-    public void setLine(PVector pivotPos, PVector currPos) {
+    public void setLine(PVector anchorPos, PVector currPos) {
         this.currPos = currPos.copy();
-        this.pivotPos = pivotPos.copy();
+        this.anchorPos = anchorPos.copy();
     }
 
-    public PVector getPivotPosition() {
-        if (pivotPos == null) {
+    public PVector getAnchorPosition() {
+        if (anchorPos == null) {
             return currPos.copy();
         } else {
-            return pivotPos.copy();
+            return anchorPos.copy();
         }
     }
 
@@ -72,7 +74,6 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
         currVel.add(accel);
         currPos.add(currVel);
         force = new PVector(0, 0);
-        currVel.mult(0.1f); // damping effect
     }
 
     public void update() {
@@ -84,8 +85,8 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
         ParticleSim.singleton.stroke(255, 255, 255);
         String mode = "gravitational";
         float col1, col2, col3, col4 = 255;
-        col2 = (int) ParticleSim.map(getPivotPosition().x, 0, ParticleSim.singleton.width, 255, 0);
-        col3 = (int) ParticleSim.map(getPivotPosition().y, 0, ParticleSim.singleton.height, 255, 0);
+        col2 = (int) ParticleSim.map(getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
+        col3 = (int) ParticleSim.map(getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
         PVector vector, vector1;
         ParticleColorProvider colorProvider = new ParticleColorProvider1();
         colorProvider.setDataObject(this);
@@ -106,7 +107,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             new DistortingTriangleParticleDrawer().draw(this, colorProvider);
             break;
         case "5":
-            vector = currPos.copy().sub(getPivotPosition());
+            vector = currPos.copy().sub(getAnchorPosition());
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
             ParticleSim.singleton.line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
@@ -120,7 +121,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
                     currPos.y + vector1.y);
             break;
         case "6":
-            vector = currPos.copy().sub(getPivotPosition()).mult(10).limit(100);
+            vector = currPos.copy().sub(getAnchorPosition()).mult(10).limit(100);
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
             ParticleSim.singleton.line(currPos.x, currPos.y, currPos.x + vector.x, currPos.y + vector.y);
@@ -156,11 +157,11 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             ParticleSim.singleton.circle(currPos.x, currPos.y, (int) ParticleSim.map(force.mag(), 0, 1, 0, 10));
             break;
         case "9":
-            vector = currPos.copy().sub(getPivotPosition()).limit(125);
+            vector = currPos.copy().sub(getAnchorPosition()).limit(125);
             col1 = (int) ParticleSim.map(vector.heading(), 0, 2 * ParticleSim.PI, 255, 0);
             col4 = (int) ParticleSim.map(vector.mag(), 0, 50, 75, 150);
             ParticleSim.singleton.stroke(col1, col2, col3, col4);
-            ParticleSim.singleton.circle(getPivotPosition().x, getPivotPosition().y,
+            ParticleSim.singleton.circle(getAnchorPosition().x, getAnchorPosition().y,
                     (int) ParticleSim.map(vector.mag(), 0, 100, 0, 75));
             break;
         }

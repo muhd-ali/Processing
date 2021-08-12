@@ -5,10 +5,9 @@ import venom.contract.Springed;
 
 public class SpringedBehavior extends Behavior<Springed> {
     public void applyTo(Springed system) {
-        float dist = system.getCenterOfMassPosition().dist(system.getPivotPosition());
-        double forceMag = -dist * system.SPRING_CONSTANT;
-        PVector force = system.getCenterOfMassPosition().copy().sub(system.getPivotPosition());
-        force = force.setMag((float) forceMag);
+        PVector force1 = system.getCenterOfMassPosition().sub(system.getAnchorPosition()).mult(-system.SPRING_CONSTANT);
+        PVector force2 = system.getVelocity().mult(system.DAMPING_CONSTANT);
+        PVector force = force1.sub(force2);
         system.addForce(force);
     }
 }
