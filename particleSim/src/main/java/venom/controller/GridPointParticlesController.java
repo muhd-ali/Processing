@@ -8,6 +8,8 @@ import venom.Particle;
 import venom.ParticleSim;
 import venom.behavior.Behavior;
 import venom.behavior.ExternalInteractionBehavior;
+import venom.colorProvider.WhiteColorProvider;
+import venom.drawer.RocketDrawer;
 
 public class GridPointParticlesController {
     private final ExternalInteractionBehavior externalInteractionBehavior;
@@ -41,7 +43,7 @@ public class GridPointParticlesController {
 
     public void draw() {
         for (Particle gp : particles) {
-            gp.draw();
+            gp.draw(new RocketDrawer(), new WhiteColorProvider<>());
             gp.update();
         }
     }

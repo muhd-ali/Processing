@@ -7,6 +7,8 @@ import processing.core.PVector;
 import venom.Particle;
 import venom.ParticleSim;
 import venom.behavior.SteerableBehavior;
+import venom.colorProvider.WhiteColorProvider;
+import venom.drawer.RocketDrawer;
 
 public class RandomParticlesController {
     int numParticles;
@@ -29,7 +31,7 @@ public class RandomParticlesController {
                         ParticleSim.singleton.random(ParticleSim.singleton.height)));
             }
             steerableBehavior.applyTo(p);
-            p.draw();
+            p.draw(new RocketDrawer(), new WhiteColorProvider<>());
             p.update();
         }
     }

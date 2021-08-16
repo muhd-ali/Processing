@@ -8,8 +8,10 @@ import venom.behavior.ChargedBehavior;
 import venom.behavior.GravitationalBehavior;
 import venom.behavior.SpringedBehavior;
 import venom.behavior.SteerableBehavior;
+import venom.colorProvider.WhiteColorProvider;
 import venom.controller.GridPointParticlesController;
 import venom.controller.RandomParticlesController;
+import venom.drawer.*;
 
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
@@ -44,12 +46,35 @@ public class ParticleSim extends PApplet {
         gpc = new GridPointParticlesController(gravitationalBehavior, null);
     }
 
+//    private static void getDrawer() {
+//        switch (mode) {
+//            case "points":
+//                new PointParticleDrawer().draw(getPosition(), new WhiteColorProvider<>());
+//                break;
+//            case "gravitational":
+//                new GravitationalParticleDrawer().draw(this, new WhiteColorProvider<>());
+//                break;
+//            case "rocket":
+//                new RocketDrawer().draw(this, new WhiteColorProvider<>());
+//                break;
+//            case "2":
+//                new DistortingPointParticleDrawer().draw(this, colorProvider);
+//                break;
+//            case "3":
+//                new HairParticleDrawer().draw(this, colorProvider);
+//                break;
+//            case "4":
+//                new DistortingTriangleParticleDrawer().draw(this, colorProvider);
+//                break;
+//        }
+//    }
+
     public void draw() {
         background(0);
         mouse.setCurrPos(new PVector(mouseX, mouseY));
         steerableBehavior.applyTo(mouse);
         mouse.update();
-        mouse.draw();
+        mouse.draw(new PointParticleDrawer(), new WhiteColorProvider<>());
         rpc.draw();
         gpc.draw();
         gpc.update(rpc);

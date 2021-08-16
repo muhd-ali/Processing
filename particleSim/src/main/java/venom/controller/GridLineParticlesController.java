@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import processing.core.PVector;
 import venom.Particle;
 import venom.ParticleSim;
+import venom.colorProvider.WhiteColorProvider;
+import venom.drawer.LineDrawer;
+import venom.drawer.RocketDrawer;
 
 class GridLineParticlesController {
 	List<List<Particle>> edgeParticles = new ArrayList<>();
@@ -47,7 +50,7 @@ class GridLineParticlesController {
 			Particle line = lines.get(i);
 			List<Particle> pair = edgeParticles.get(i);
 			line.setLine(pair.get(0).getPosition(), pair.get(1).getPosition());
-			line.draw();
+			line.draw(new LineDrawer(), new WhiteColorProvider<>());
 		}
 		for (List<Particle> pair : edgeParticles) {
 			for (Particle gp : pair) {

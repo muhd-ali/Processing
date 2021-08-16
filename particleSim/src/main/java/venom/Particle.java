@@ -11,8 +11,7 @@ import venom.contract.*;
 import venom.drawer.*;
 
 @Builder
-public
-class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gravitational {
+public class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gravitational {
     private PVector anchorPos, targetPos;
     @Setter
     PVector currPos;
@@ -86,19 +85,22 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
         updatePosition();
     }
 
-    public void draw() {
+    public void draw(Drawer drawer, ColorProvider colorProvider) {
         ParticleSim.singleton.strokeWeight(10);
         ParticleSim.singleton.stroke(255, 255, 255);
-        String mode = "rocket";
+        String mode = "drawer";
         float col1, col2, col3, col4 = 255;
         col2 = (int) ParticleSim.map(getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
         col3 = (int) ParticleSim.map(getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
         PVector vector, vector1;
-        ParticleColorProvider colorProvider = new ParticleColorProvider1();
-        colorProvider.setDataObject(this);
+        ParticleColorProvider colorProvider1 = new ParticleColorProvider1();
+        colorProvider1.setDataObject(this);
         switch (mode) {
+        case "drawer":
+            drawer.draw(this, colorProvider);
+            break;
         case "points":
-            new PointDrawer().draw(getPosition(), new WhiteColorProvider<>());
+            new PointParticleDrawer().draw(this, new WhiteColorProvider<>());
             break;
         case "gravitational":
             new GravitationalParticleDrawer().draw(this, new WhiteColorProvider<>());
@@ -107,13 +109,13 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             new RocketDrawer().draw(this, new WhiteColorProvider<>());
             break;
         case "2":
-            new DistortingPointParticleDrawer().draw(this, colorProvider);
+            new DistortingPointParticleDrawer().draw(this, colorProvider1);
             break;
         case "3":
-            new HairParticleDrawer().draw(this, colorProvider);
+            new HairParticleDrawer().draw(this, colorProvider1);
             break;
         case "4":
-            new DistortingTriangleParticleDrawer().draw(this, colorProvider);
+            new DistortingTriangleParticleDrawer().draw(this, colorProvider1);
             break;
         case "5":
             vector = currPos.copy().sub(getAnchorPosition());

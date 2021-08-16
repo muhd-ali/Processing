@@ -1,21 +1,5 @@
 package venom.contract;
 
 interface Drawable {
-	void draw();
+	void draw(Drawer drawer, ColorProvider colorProvider);
 }
-
-// interface Drawable {
-// Drawer drawer;
-// ColorProvider colorProvider;
-// default void setDrawer(Drawer drawer) {
-// this.drawer = drawer;
-// }
-
-// default void setColorProvider(ColorProvider colorProvider) {
-// this.colorProvider = colorProvider;
-// }
-
-// default void draw() {
-// drawer.draw(this, colorProvider);
-// }
-// }
