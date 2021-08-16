@@ -14,7 +14,7 @@ public class GravitationalBehavior extends ExternalInteractionBehavior<Gravitati
         if (particle.getMass() * external.getMass() < 0) {
             force.mult(-1);
         }
-        force.setMag((float) forceMag);
+        force.setMag((float) forceMag).limit(10);
         particle.addForce(force);
     }
 }

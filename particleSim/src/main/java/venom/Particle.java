@@ -71,6 +71,12 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
 
     public void updatePosition() {
         PVector accel = force.div(mass);
+        if (Math.abs(currVel.mag() - currVel.copy().add(accel).mag()) > 10) {
+            System.out.println("particlePos: " + currPos);
+            System.out.println("particleAccel: " + accel.mag());
+            System.out.println("mousePos: " + ParticleSim.singleton.mouse.currPos);
+            System.out.println("");
+        }
         currVel.add(accel);
         currPos.add(currVel);
         force = new PVector(0, 0);
@@ -95,7 +101,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             new PointDrawer().draw(getPosition(), new WhiteColorProvider());
             break;
         case "gravitational":
-            new GravitationalParticleDrawer().draw(this, colorProvider);
+            new GravitationalParticleDrawer().draw(this, new WhiteColorProvider());
             break;
         case "2":
             new DistortingPointParticleDrawer().draw(this, colorProvider);

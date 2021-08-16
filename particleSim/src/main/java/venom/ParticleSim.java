@@ -31,7 +31,7 @@ public class ParticleSim extends PApplet {
         size(1920, 1080, P3D);
     }
 
-    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(10).charge(200).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(25).charge(200).build();
 
     public void setup() {
         frameRate(144);
