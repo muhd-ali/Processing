@@ -89,7 +89,7 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
     public void draw() {
         ParticleSim.singleton.strokeWeight(10);
         ParticleSim.singleton.stroke(255, 255, 255);
-        String mode = "gravitational";
+        String mode = "rocket";
         float col1, col2, col3, col4 = 255;
         col2 = (int) ParticleSim.map(getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
         col3 = (int) ParticleSim.map(getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
@@ -102,6 +102,9 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
             break;
         case "gravitational":
             new GravitationalParticleDrawer().draw(this, new WhiteColorProvider());
+            break;
+        case "rocket":
+            new RocketDrawer().draw(this, new WhiteColorProvider());
             break;
         case "2":
             new DistortingPointParticleDrawer().draw(this, colorProvider);

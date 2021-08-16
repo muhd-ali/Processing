@@ -6,7 +6,7 @@ import venom.ParticleSim;
 import venom.contract.ColorProvider;
 
 public class DistortingTriangleParticleDrawer extends ParticleDrawer {
-    public void draw(Particle particle, ColorProvider<Particle> colorProvider) {
+    public void draw() {
         colorProvider.setStroke();
         PVector vector = particle.getPosition().sub(particle.getAnchorPosition());
         ParticleSim.singleton.line(particle.getPosition().x, particle.getPosition().y, particle.getPosition().x + vector.x, particle.getPosition().y + vector.y);
