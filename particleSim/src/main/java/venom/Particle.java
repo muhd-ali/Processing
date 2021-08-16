@@ -98,13 +98,13 @@ class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gr
         colorProvider.setDataObject(this);
         switch (mode) {
         case "points":
-            new PointDrawer().draw(getPosition(), new WhiteColorProvider());
+            new PointDrawer().draw(getPosition(), new WhiteColorProvider<>());
             break;
         case "gravitational":
-            new GravitationalParticleDrawer().draw(this, new WhiteColorProvider());
+            new GravitationalParticleDrawer().draw(this, new WhiteColorProvider<>());
             break;
         case "rocket":
-            new RocketDrawer().draw(this, new WhiteColorProvider());
+            new RocketDrawer().draw(this, new WhiteColorProvider<>());
             break;
         case "2":
             new DistortingPointParticleDrawer().draw(this, colorProvider);

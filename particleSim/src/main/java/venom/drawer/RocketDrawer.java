@@ -2,6 +2,8 @@ package venom.drawer;
 
 import venom.ParticleSim;
 
+import java.awt.*;
+
 public class RocketDrawer extends ParticleDrawer {
     float vWidth = 20;
     float vHeight = 20;
@@ -10,7 +12,7 @@ public class RocketDrawer extends ParticleDrawer {
     void drawBody() {
         ParticleSim.singleton.stroke(0);
         ParticleSim.singleton.strokeWeight(1);
-        ParticleSim.singleton.fill(255);
+        ParticleSim.singleton.fill(Color.decode("#bbe5f7").getRGB());
         ParticleSim.singleton.triangle(-vWidth, 0, vWidth, 0, 0, vHeight);
         ParticleSim.singleton.pushMatrix();
         ParticleSim.singleton.translate(0, vHeight/2);
@@ -23,11 +25,11 @@ public class RocketDrawer extends ParticleDrawer {
     }
 
     void drawFlame() {
-        ParticleSim.singleton.fill(255);
+        ParticleSim.singleton.fill(Color.decode("#ffee00").getRGB());
         ParticleSim.singleton.triangle(-vWidth, 0, vWidth, 0, 0, (-particle.getVelocity().mag()/maxSpeed) * vHeight);
-        ParticleSim.singleton.fill(255);
+        ParticleSim.singleton.fill(Color.decode("#ee6611").getRGB());
         ParticleSim.singleton.triangle(-2*vWidth/3, 0, 2*vWidth/3, 0, 0, (-particle.getVelocity().mag()/maxSpeed) * (2*vHeight/3));
-        ParticleSim.singleton.fill(255);
+        ParticleSim.singleton.fill(Color.decode("#ee2211").getRGB());
         ParticleSim.singleton.triangle(-vWidth/3, 0, vWidth/3, 0, 0, (-particle.getVelocity().mag()/maxSpeed) * (vHeight/3));
     }
 
