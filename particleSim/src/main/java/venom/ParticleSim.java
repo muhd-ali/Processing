@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableList;
+import jcuda.Pointer;
+import jcuda.runtime.JCuda;
 import processing.core.PApplet;
 import processing.core.PVector;
 import venom.behavior.*;
@@ -14,7 +16,7 @@ import venom.drawer.*;
 
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
-    public float res = 0.01f;
+    public float res = 0.025f;
     List<Particle> gridParticles;
     public SpringedBehavior springedBehavior;
     public ChargedBehavior chargedBehavior;
@@ -27,13 +29,17 @@ public class ParticleSim extends PApplet {
     public static void main(String[] args) {
         String[] processingArgs = { "ParticleSim" };
         PApplet.runSketch(processingArgs, singleton);
+        Pointer pointer = new Pointer();
+        JCuda.cudaMalloc(pointer, 4);
+        System.out.println("Pointer: "+pointer);
+        JCuda.cudaFree(pointer);
     }
 
     public void settings() {
-        size(1920, 1080, P3D);
+        size(1980, 1080, P3D);
     }
 
-    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(25).charge(1).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(1).charge(50).build();
 
     public void setup() {
         frameRate(144);

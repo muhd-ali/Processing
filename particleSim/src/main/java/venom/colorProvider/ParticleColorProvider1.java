@@ -7,7 +7,7 @@ import venom.ParticleSim;
 
 public class ParticleColorProvider1 extends ParticleColorProvider {
     public float col1() {
-        return (int) PApplet.map(particle.getForce().heading(), -PConstants.PI, PConstants.PI, 255, 0);
+        return 255;
     }
 
     public float col2() {

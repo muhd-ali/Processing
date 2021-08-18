@@ -7,25 +7,15 @@ import venom.ParticleSim;
 import venom.contract.Forced;
 
 public class PerlinsNoiseBehavior extends Behavior<Forced> {
-    float noise[][], xOff, yOff, inc = 0.05f;
+    float[][] noise;
+    float xOff, yOff, zOff = 0;
+    float inc = 0.1f;
     int width, height, step = 50;
 
     public PerlinsNoiseBehavior(int screenWidth, int screenHeight) {
         width = screenWidth;
         height = screenHeight;
-        noise = new float[screenWidth/step][screenHeight/step];
-    }
-
-    private void updateNoise() {
-        yOff = 0;
-        for (int i = 0; i < noise.length; i++) {
-            xOff = 0;
-            for (int j = 0; j < noise[i].length; j++) {
-                noise[i][j] = ParticleSim.singleton.noise(xOff, yOff);
-                xOff += inc;
-            }
-            yOff += inc;
-        }
+        noise = new float[screenWidth / step][screenHeight / step];
     }
 
     private Pair<Integer, Integer> calculateIndexFromPosition(PVector centerOfMassPosition) {
@@ -33,15 +23,15 @@ public class PerlinsNoiseBehavior extends Behavior<Forced> {
         if (centerOfMassPosition.x < 0) {
             i = 0;
         } else if (centerOfMassPosition.x >= width) {
-            i = width/step - 1;
+            i = width / step - 1;
         } else {
-                i = (int) PApplet.map(centerOfMassPosition.x, 0, width, 0, width / step);
+            i = (int) PApplet.map(centerOfMassPosition.x, 0, width, 0, width / step);
         }
 
         if (centerOfMassPosition.y < 0) {
             j = 0;
         } else if (centerOfMassPosition.y >= height) {
-            j = height/step - 1;
+            j = height / step - 1;
         } else {
             j = (int) PApplet.map(centerOfMassPosition.y, 0, height, 0, height / step);
         }
@@ -49,12 +39,14 @@ public class PerlinsNoiseBehavior extends Behavior<Forced> {
     }
 
     public void applyTo(Forced system) {
-        updateNoise();
         Pair<Integer, Integer> index = calculateIndexFromPosition(system.getCenterOfMassPosition());
         float selectedNoise = noise[index.getLeft()][index.getRight()];
         float angle = PApplet.map(selectedNoise, 0, 1, 0, 2 * ParticleSim.singleton.PI);
-        PVector force = PVector.fromAngle(angle);
+        PVector force = PVector.fromAngle(angle).setMag(5);
         system.addForce(force);
+        xOff = PApplet.map(index.getLeft(), 0, height / step, 0, 1);
+        yOff = PApplet.map(index.getRight(), 0, width / step, 0, 1);
+        noise[index.getLeft()][index.getRight()] = ParticleSim.singleton.noise(xOff, yOff, zOff);
     }
 
 }
