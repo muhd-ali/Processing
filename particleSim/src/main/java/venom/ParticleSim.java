@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableList;
-import jcuda.Pointer;
-import jcuda.runtime.JCuda;
 import processing.core.PApplet;
 import processing.core.PVector;
 import venom.behavior.*;
@@ -16,7 +14,7 @@ import venom.drawer.*;
 
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
-    public float res = 0.025f;
+    public float res = 0.03f;
     List<Particle> gridParticles;
     public SpringedBehavior springedBehavior;
     public ChargedBehavior chargedBehavior;
@@ -25,6 +23,8 @@ public class ParticleSim extends PApplet {
     SteerableBehavior steerableBehavior;
     RandomParticlesController rpc;
     GridPointParticlesController gpc;
+
+    int oldHeight, oldWidth;
 
     public static void main(String[] args) {
         String[] processingArgs = { "ParticleSim" };
@@ -37,8 +37,9 @@ public class ParticleSim extends PApplet {
 
     public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(1).charge(50).build();
 
-    public void setup() {
-        frameRate(144);
+    private void initObjects() {
+        oldHeight = height;
+        oldWidth = width;
         gridParticles = new ArrayList<>();
         springedBehavior = new SpringedBehavior();
         chargedBehavior = new ChargedBehavior();
@@ -47,6 +48,19 @@ public class ParticleSim extends PApplet {
         perlinsNoiseBehavior = new PerlinsNoiseBehavior(width, height);
         rpc = new RandomParticlesController(0);
         gpc = new GridPointParticlesController(chargedBehavior, ImmutableList.of(springedBehavior, perlinsNoiseBehavior));
+    }
+
+    public void setup() {
+        frameRate(144);
+        surface.setResizable(true);
+        registerMethod("pre", this);
+        initObjects();
+    }
+
+    public void pre() {
+        if (oldHeight != height) {
+            initObjects();
+        }
     }
 
     public void draw() {

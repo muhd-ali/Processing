@@ -19,7 +19,7 @@ public class GridPointParticlesController {
     public GridPointParticlesController(ExternalInteractionBehavior externalInteractionBehavior, List<Behavior> defaultBehaviors) {
         for (int x = 0; x < ParticleSim.singleton.width; x += 1 / ParticleSim.singleton.res) {
             for (int y = 0; y < ParticleSim.singleton.height; y += 1 / ParticleSim.singleton.res) {
-                Particle particle = Particle.builder().currPos(new PVector(x, y)).anchorPos(new PVector(x, y)).mass(10).charge(50)
+                Particle particle = Particle.builder().currPos(new PVector(x, y)).anchorPos(new PVector(x, y)).mass(1).charge(50)
                         .build();
                 particles.add(particle);
             }

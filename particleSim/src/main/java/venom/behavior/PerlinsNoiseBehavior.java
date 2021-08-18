@@ -3,6 +3,7 @@ package venom.behavior;
 import org.apache.commons.lang3.tuple.Pair;
 import processing.core.PApplet;
 import processing.core.PVector;
+import venom.Particle;
 import venom.ParticleSim;
 import venom.contract.Forced;
 
@@ -48,7 +49,10 @@ public class PerlinsNoiseBehavior extends Behavior<Forced> {
         xOff = PApplet.map(index.getLeft(), 0, height / step, 0, height * intensity);
         yOff = PApplet.map(index.getRight(), 0, width / step, 0, width * intensity);
         noise[index.getLeft()][index.getRight()] = ParticleSim.singleton.noise(xOff, yOff, zOff);
-        zOff += 0.0001;
+
+        if (ParticleSim.singleton.frameCount % 10 == 0) {
+            zOff += 0.0001;
+        }
     }
 
 }
