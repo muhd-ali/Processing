@@ -9,13 +9,14 @@ import venom.contract.Forced;
 public class PerlinsNoiseBehavior extends Behavior<Forced> {
     float[][] noise;
     float xOff, yOff, zOff = 0;
-    float inc = 0.1f;
+    float intensity = 0.0025f;
     int width, height, step = 50;
 
     public PerlinsNoiseBehavior(int screenWidth, int screenHeight) {
         width = screenWidth;
         height = screenHeight;
-        noise = new float[screenWidth / step][screenHeight / step];
+        noise = new float[width / step][height / step];
+        ParticleSim.singleton.noiseDetail(1, 0.1f);
     }
 
     private Pair<Integer, Integer> calculateIndexFromPosition(PVector centerOfMassPosition) {
@@ -44,9 +45,10 @@ public class PerlinsNoiseBehavior extends Behavior<Forced> {
         float angle = PApplet.map(selectedNoise, 0, 1, 0, 2 * ParticleSim.singleton.PI);
         PVector force = PVector.fromAngle(angle).setMag(5);
         system.addForce(force);
-        xOff = PApplet.map(index.getLeft(), 0, height / step, 0, 1);
-        yOff = PApplet.map(index.getRight(), 0, width / step, 0, 1);
+        xOff = PApplet.map(index.getLeft(), 0, height / step, 0, height * intensity);
+        yOff = PApplet.map(index.getRight(), 0, width / step, 0, width * intensity);
         noise[index.getLeft()][index.getRight()] = ParticleSim.singleton.noise(xOff, yOff, zOff);
+        zOff += 0.0001;
     }
 
 }

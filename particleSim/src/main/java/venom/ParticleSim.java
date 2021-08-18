@@ -29,10 +29,6 @@ public class ParticleSim extends PApplet {
     public static void main(String[] args) {
         String[] processingArgs = { "ParticleSim" };
         PApplet.runSketch(processingArgs, singleton);
-        Pointer pointer = new Pointer();
-        JCuda.cudaMalloc(pointer, 4);
-        System.out.println("Pointer: "+pointer);
-        JCuda.cudaFree(pointer);
     }
 
     public void settings() {

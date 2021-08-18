@@ -23,12 +23,6 @@
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
   </properties>
   <dependencies>
-      <!-- https://mvnrepository.com/artifact/org.jcuda/jcuda -->
-      <dependency>
-          <groupId>org.jcuda</groupId>
-          <artifactId>jcuda</artifactId>
-          <version>11.4.1</version>
-      </dependency>
       <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
       <dependency>
           <groupId>com.google.guava</groupId>
