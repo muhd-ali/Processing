@@ -88,7 +88,7 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     public void draw(Drawer drawer, ColorProvider colorProvider) {
         ParticleSim.singleton.strokeWeight(10);
         ParticleSim.singleton.stroke(255, 255, 255);
-        String mode = "drawer";
+        String mode = "hair";
         float col1, col2, col3, col4 = 255;
         col2 = (int) ParticleSim.map(getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
         col3 = (int) ParticleSim.map(getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
@@ -111,7 +111,7 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
         case "2":
             new DistortingPointParticleDrawer().draw(this, colorProvider1);
             break;
-        case "3":
+        case "hair":
             new HairParticleDrawer().draw(this, colorProvider1);
             break;
         case "4":

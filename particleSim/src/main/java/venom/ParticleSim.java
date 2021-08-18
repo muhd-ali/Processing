@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PVector;
-import venom.behavior.ChargedBehavior;
-import venom.behavior.GravitationalBehavior;
-import venom.behavior.SpringedBehavior;
-import venom.behavior.SteerableBehavior;
+import venom.behavior.*;
 import venom.colorProvider.WhiteColorProvider;
 import venom.controller.GridPointParticlesController;
 import venom.controller.RandomParticlesController;
@@ -20,6 +17,7 @@ public class ParticleSim extends PApplet {
     public SpringedBehavior springedBehavior;
     public ChargedBehavior chargedBehavior;
     public GravitationalBehavior gravitationalBehavior;
+    public PerlinsNoiseBehavior perlinsNoiseBehavior;
     SteerableBehavior steerableBehavior;
     RandomParticlesController rpc;
     GridPointParticlesController gpc;
@@ -33,7 +31,7 @@ public class ParticleSim extends PApplet {
         size(1920, 1080, P3D);
     }
 
-    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(25).charge(200).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(25).charge(0.000000000001f).build();
 
     public void setup() {
         frameRate(144);
@@ -42,32 +40,10 @@ public class ParticleSim extends PApplet {
         chargedBehavior = new ChargedBehavior();
         gravitationalBehavior = new GravitationalBehavior();
         steerableBehavior = new SteerableBehavior();
+        perlinsNoiseBehavior = new PerlinsNoiseBehavior(width, height);
         rpc = new RandomParticlesController(0);
-        gpc = new GridPointParticlesController(gravitationalBehavior, null);
+        gpc = new GridPointParticlesController(chargedBehavior, perlinsNoiseBehavior);
     }
-
-//    private static void getDrawer() {
-//        switch (mode) {
-//            case "points":
-//                new PointParticleDrawer().draw(getPosition(), new WhiteColorProvider<>());
-//                break;
-//            case "gravitational":
-//                new GravitationalParticleDrawer().draw(this, new WhiteColorProvider<>());
-//                break;
-//            case "rocket":
-//                new RocketDrawer().draw(this, new WhiteColorProvider<>());
-//                break;
-//            case "2":
-//                new DistortingPointParticleDrawer().draw(this, colorProvider);
-//                break;
-//            case "3":
-//                new HairParticleDrawer().draw(this, colorProvider);
-//                break;
-//            case "4":
-//                new DistortingTriangleParticleDrawer().draw(this, colorProvider);
-//                break;
-//        }
-//    }
 
     public void draw() {
         background(0);
