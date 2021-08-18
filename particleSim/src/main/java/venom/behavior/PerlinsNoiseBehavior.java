@@ -3,7 +3,6 @@ package venom.behavior;
 import org.apache.commons.lang3.tuple.Pair;
 import processing.core.PApplet;
 import processing.core.PVector;
-import venom.Particle;
 import venom.ParticleSim;
 import venom.contract.Forced;
 

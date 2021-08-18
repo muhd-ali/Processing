@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import processing.core.PVector;
 import venom.colorProvider.ParticleColorProvider;
-import venom.colorProvider.ParticleColorProvider1;
+import venom.colorProvider.StressColorProvider1;
 import venom.colorProvider.WhiteColorProvider;
 import venom.contract.*;
 import venom.drawer.*;
@@ -82,19 +82,19 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     public void draw(Drawer drawer, ColorProvider colorProvider) {
         ParticleSim.singleton.strokeWeight(10);
         ParticleSim.singleton.stroke(255, 255, 255);
-        String mode = "hair";
+        String mode = "points";
         float col1, col2, col3, col4 = 255;
         col2 = (int) ParticleSim.map(getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
         col3 = (int) ParticleSim.map(getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
         PVector vector, vector1;
-        ParticleColorProvider colorProvider1 = new ParticleColorProvider1();
+        ParticleColorProvider colorProvider1 = new StressColorProvider1();
         colorProvider1.setDataObject(this);
         switch (mode) {
         case "drawer":
             drawer.draw(this, colorProvider);
             break;
         case "points":
-            new PointParticleDrawer().draw(this, new WhiteColorProvider<>());
+            new PointParticleDrawer().draw(this, colorProvider1);
             break;
         case "gravitational":
             new GravitationalParticleDrawer().draw(this, new WhiteColorProvider<>());
@@ -102,13 +102,13 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
         case "rocket":
             new RocketDrawer().draw(this, new WhiteColorProvider<>());
             break;
-        case "2":
+        case "DistortingPoint":
             new DistortingPointParticleDrawer().draw(this, colorProvider1);
             break;
         case "hair":
             new HairParticleDrawer().draw(this, colorProvider1);
             break;
-        case "4":
+        case "DistortingTriangle":
             new DistortingTriangleParticleDrawer().draw(this, colorProvider1);
             break;
         case "5":
