@@ -2,6 +2,8 @@ package venom;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.google.common.collect.ImmutableList;
 import processing.core.PApplet;
 import processing.core.PVector;
 import venom.behavior.*;
@@ -31,7 +33,7 @@ public class ParticleSim extends PApplet {
         size(1920, 1080, P3D);
     }
 
-    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(25).charge(0.000000000001f).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(25).charge(1).build();
 
     public void setup() {
         frameRate(144);
@@ -42,7 +44,7 @@ public class ParticleSim extends PApplet {
         steerableBehavior = new SteerableBehavior();
         perlinsNoiseBehavior = new PerlinsNoiseBehavior(width, height);
         rpc = new RandomParticlesController(0);
-        gpc = new GridPointParticlesController(chargedBehavior, perlinsNoiseBehavior);
+        gpc = new GridPointParticlesController(chargedBehavior, ImmutableList.of(springedBehavior, perlinsNoiseBehavior));
     }
 
     public void draw() {

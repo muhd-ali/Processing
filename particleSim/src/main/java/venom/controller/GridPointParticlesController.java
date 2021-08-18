@@ -13,10 +13,10 @@ import venom.drawer.RocketDrawer;
 
 public class GridPointParticlesController {
     private final ExternalInteractionBehavior externalInteractionBehavior;
-    private final Behavior defaultBehavior;
+    private final List<Behavior> defaultBehaviors;
     List<Particle> particles = new ArrayList<>();
 
-    public GridPointParticlesController(ExternalInteractionBehavior externalInteractionBehavior, Behavior defaultBehavior) {
+    public GridPointParticlesController(ExternalInteractionBehavior externalInteractionBehavior, List<Behavior> defaultBehaviors) {
         for (int x = 0; x < ParticleSim.singleton.width; x += 1 / ParticleSim.singleton.res) {
             for (int y = 0; y < ParticleSim.singleton.height; y += 1 / ParticleSim.singleton.res) {
                 Particle particle = Particle.builder().currPos(new PVector(x, y)).anchorPos(new PVector(x, y)).mass(10).charge(50)
@@ -25,7 +25,7 @@ public class GridPointParticlesController {
             }
         }
         this.externalInteractionBehavior = externalInteractionBehavior;
-        this.defaultBehavior = defaultBehavior;
+        this.defaultBehaviors = defaultBehaviors;
     }
 
     public void update(RandomParticlesController rpc) {
@@ -36,8 +36,9 @@ public class GridPointParticlesController {
                 externalInteractionBehavior.updateExternal(rp);
                 externalInteractionBehavior.applyTo(gp);
             }
-            if (defaultBehavior != null)
-            defaultBehavior.applyTo(gp);
+            for (Behavior defaultBehavior : defaultBehaviors) {
+                defaultBehavior.applyTo(gp);
+            }
         }
     }
 
