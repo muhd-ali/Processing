@@ -73,7 +73,7 @@ public class ParticleSim extends PApplet {
 
     public void draw() {
         background(0);
-        mouse.setTargetPosition(new PVector(mouseX, mouseY));
+        mouse.setCurrPos(new PVector(mouseX, mouseY));
         steerableBehavior.applyTo(mouse);
         mouse.update();
         mouse.draw(new PointParticleDrawer(), new WhiteColorProvider<>());
