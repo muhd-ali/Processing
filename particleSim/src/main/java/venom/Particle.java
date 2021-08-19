@@ -10,16 +10,16 @@ import venom.colorProvider.WhiteColorProvider;
 import venom.contract.*;
 import venom.drawer.*;
 
-@Builder
+@Builder(toBuilder = true)
 public class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gravitational {
     private PVector anchorPos, targetPos;
     @Setter
-    PVector currPos;
+    private PVector currPos;
     @Builder.Default
-    PVector currVel = new PVector(0, 0);
+    private PVector currVel = new PVector(0, 0);
     @Builder.Default
     @Getter
-    float mass = 1, charge = 1;
+    private float mass = 1, charge = 1;
     @Builder.Default
     private PVector force = new PVector(0, 0);
 
@@ -97,7 +97,7 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
             new PointParticleDrawer().draw(this, colorProvider1);
             break;
         case "gravitational":
-            new GravitationalParticleDrawer().draw(this, new WhiteColorProvider<>());
+            new GravitationalParticleDrawer().draw(this, colorProvider1);
             break;
         case "rocket":
             new RocketDrawer().draw(this, new WhiteColorProvider<>());

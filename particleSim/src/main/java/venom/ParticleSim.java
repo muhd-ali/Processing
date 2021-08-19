@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.common.collect.ImmutableList;
 import processing.core.PApplet;
 import processing.core.PVector;
+import processing.event.MouseEvent;
 import venom.behavior.*;
 import venom.colorProvider.WhiteColorProvider;
 import venom.controller.GridPointParticlesController;
@@ -15,7 +16,6 @@ import venom.drawer.*;
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
     public float res = 0.03f;
-    List<Particle> gridParticles;
     public SpringedBehavior springedBehavior;
     public ChargedBehavior chargedBehavior;
     public GravitationalBehavior gravitationalBehavior;
@@ -37,10 +37,13 @@ public class ParticleSim extends PApplet {
 
     public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(1).charge(50).build();
 
+    public void mouseWheel(MouseEvent event) {
+        mouse = mouse.toBuilder().charge(mouse.getCharge() - (float) event.getCount() * 5).build();
+    }
+
     private void initObjects() {
         oldHeight = height;
         oldWidth = width;
-        gridParticles = new ArrayList<>();
         springedBehavior = new SpringedBehavior();
         chargedBehavior = new ChargedBehavior();
         gravitationalBehavior = new GravitationalBehavior();
