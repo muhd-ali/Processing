@@ -27,7 +27,7 @@ public class RandomParticlesController {
     public void draw() {
         for (Particle p : particles) {
             if (steerableBehavior.distanceToTargetFor(p) < 10) {
-                p.updateTargetPosition(new PVector(ParticleSim.singleton.random(ParticleSim.singleton.width),
+                p.setTargetPosition(new PVector(ParticleSim.singleton.random(ParticleSim.singleton.width),
                         ParticleSim.singleton.random(ParticleSim.singleton.height)));
             }
             steerableBehavior.applyTo(p);

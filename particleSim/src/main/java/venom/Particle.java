@@ -12,7 +12,9 @@ import venom.drawer.*;
 
 @Builder(toBuilder = true)
 public class Particle implements LiveDrawable, Moving, Charged, Springed, Steerable, Gravitational {
-    private PVector anchorPos, targetPos;
+    private PVector anchorPos;
+    @Setter
+    private PVector targetPosition;
     @Setter
     private PVector currPos;
     @Builder.Default
@@ -53,22 +55,18 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     }
 
     public PVector getTargetPosition() {
-        if (targetPos == null) {
+        if (targetPosition == null) {
             return currPos.copy();
         } else {
-            return targetPos.copy();
+            return targetPosition.copy();
         }
-    }
-
-    public void updateTargetPosition(PVector targetPos) {
-        this.targetPos = targetPos;
     }
 
     public void addForce(PVector f) {
         force.add(f);
     }
 
-    public void updatePosition() {
+    public void setPosition() {
         PVector accel = force.div(mass);
         currVel.add(accel);
         currPos.add(currVel);
@@ -76,7 +74,7 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     }
 
     public void update() {
-        updatePosition();
+        setPosition();
     }
 
     public void draw(Drawer drawer, ColorProvider colorProvider) {

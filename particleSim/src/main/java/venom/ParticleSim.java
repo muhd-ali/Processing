@@ -1,8 +1,5 @@
 package venom;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import com.google.common.collect.ImmutableList;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -36,7 +33,7 @@ public class ParticleSim extends PApplet {
         size(1980, 1080, P3D);
     }
 
-    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(1).charge(50).build();
+    public Particle mouse = Particle.builder().currPos(new PVector(0, 0)).mass(Float.MIN_VALUE).charge(0).build();
 
     public void mouseWheel(MouseEvent event) {
         mouse = mouse.toBuilder().charge(mouse.getCharge() - (float) event.getCount() * 5).build();
@@ -76,7 +73,7 @@ public class ParticleSim extends PApplet {
 
     public void draw() {
         background(0);
-        mouse.setCurrPos(new PVector(mouseX, mouseY));
+        mouse.setTargetPosition(new PVector(mouseX, mouseY));
         steerableBehavior.applyTo(mouse);
         mouse.update();
         mouse.draw(new PointParticleDrawer(), new WhiteColorProvider<>());

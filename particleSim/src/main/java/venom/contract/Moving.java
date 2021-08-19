@@ -3,7 +3,7 @@ package venom.contract;
 import processing.core.PVector;
 
 public interface Moving {
-    void updatePosition();
+    void setPosition();
 
     PVector getVelocity();
 }
