@@ -7,15 +7,20 @@ import java.util.ArrayList;
 import processing.core.PVector;
 import venom.Particle;
 import venom.ParticleSim;
+import venom.behavior.Behavior;
+import venom.behavior.ExternalInteractionBehavior;
 import venom.colorProvider.WhiteColorProvider;
 import venom.drawer.LineDrawer;
-import venom.drawer.RocketDrawer;
 
 class GridLineParticlesController {
 	List<List<Particle>> edgeParticles = new ArrayList<>();
 	List<Particle> lines = new ArrayList<>();
 
-	GridLineParticlesController() {
+    private final ExternalInteractionBehavior externalInteractionBehavior;
+    private final List<Behavior> defaultBehaviors;
+    List<Particle> particles = new ArrayList<>();
+
+	GridLineParticlesController(ExternalInteractionBehavior externalInteractionBehavior, List<Behavior> defaultBehaviors) {
 		for (int x = 0; x < ParticleSim.singleton.width; x += 1 / ParticleSim.singleton.res) {
 			for (int y = 0; y < ParticleSim.singleton.height; y += 1 / ParticleSim.singleton.res) {
 				List<Particle> pair = new ArrayList<>();
@@ -29,18 +34,23 @@ class GridLineParticlesController {
 				lines.add(particle);
 			}
 		}
+
+        this.externalInteractionBehavior = externalInteractionBehavior;
+        this.defaultBehaviors = defaultBehaviors;
 	}
 
 	void update(RandomParticlesController rpc) {
 		for (List<Particle> pair : edgeParticles) {
 			for (Particle gp : pair) {
-				ParticleSim.singleton.chargedBehavior.updateExternal(ParticleSim.singleton.mouse);
-				ParticleSim.singleton.chargedBehavior.applyTo(gp);
+				externalInteractionBehavior.updateExternal(ParticleSim.singleton.mouse);
+				externalInteractionBehavior.applyTo(gp);
 				for (Particle rp : rpc.particles) {
-					ParticleSim.singleton.chargedBehavior.updateExternal(rp);
-					ParticleSim.singleton.chargedBehavior.applyTo(gp);
+					externalInteractionBehavior.updateExternal(rp);
+					externalInteractionBehavior.applyTo(gp);
 				}
-				ParticleSim.singleton.springedBehavior.applyTo(gp);
+                for (Behavior defaultBehavior : defaultBehaviors) {
+                    defaultBehavior.applyTo(gp);
+                }
 			}
 		}
 	}

@@ -15,11 +15,12 @@ import venom.drawer.*;
 
 public class ParticleSim extends PApplet {
     public static ParticleSim singleton = new ParticleSim();
-    public float res = 0.03f;
-    public SpringedBehavior springedBehavior;
-    public ChargedBehavior chargedBehavior;
-    public GravitationalBehavior gravitationalBehavior;
-    public PerlinsNoiseBehavior perlinsNoiseBehavior;
+    public final float res = 0.03f;
+    private SpringedBehavior springedBehavior;
+    private ChargedBehavior chargedBehavior;
+    private GravitationalBehavior gravitationalBehavior;
+    private PerlinsNoiseBehavior perlinsNoiseBehavior;
+    private MouseEventBehavior mouseEventBehavior;
     SteerableBehavior steerableBehavior;
     RandomParticlesController rpc;
     GridPointParticlesController gpc;
@@ -41,6 +42,12 @@ public class ParticleSim extends PApplet {
         mouse = mouse.toBuilder().charge(mouse.getCharge() - (float) event.getCount() * 5).build();
     }
 
+    public void mousePressed(MouseEvent event) {
+        if (mouseButton == CENTER) {
+            mouse = mouse.toBuilder().charge(0).build();
+        }
+    }
+
     private void initObjects() {
         oldHeight = height;
         oldWidth = width;
@@ -49,8 +56,9 @@ public class ParticleSim extends PApplet {
         gravitationalBehavior = new GravitationalBehavior();
         steerableBehavior = new SteerableBehavior();
         perlinsNoiseBehavior = new PerlinsNoiseBehavior(width, height);
+        mouseEventBehavior = new MouseEventBehavior();
         rpc = new RandomParticlesController(0);
-        gpc = new GridPointParticlesController(chargedBehavior, ImmutableList.of(springedBehavior, perlinsNoiseBehavior));
+        gpc = new GridPointParticlesController(chargedBehavior, ImmutableList.of(springedBehavior, perlinsNoiseBehavior, mouseEventBehavior));
     }
 
     public void setup() {
