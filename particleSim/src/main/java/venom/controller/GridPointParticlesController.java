@@ -12,11 +12,11 @@ import venom.colorProvider.WhiteColorProvider;
 import venom.drawer.RocketDrawer;
 
 public class GridPointParticlesController {
-    private final ExternalInteractionBehavior externalInteractionBehavior;
+    private final List<ExternalInteractionBehavior> externalInteractionBehaviors;
     private final List<Behavior> defaultBehaviors;
     List<Particle> particles = new ArrayList<>();
 
-    public GridPointParticlesController(ExternalInteractionBehavior externalInteractionBehavior, List<Behavior> defaultBehaviors) {
+    public GridPointParticlesController(List<ExternalInteractionBehavior> externalInteractionBehaviors, List<Behavior> defaultBehaviors) {
         for (int x = 0; x < ParticleSim.singleton.width; x += 1 / ParticleSim.singleton.res) {
             for (int y = 0; y < ParticleSim.singleton.height; y += 1 / ParticleSim.singleton.res) {
                 Particle particle = Particle.builder().currPos(new PVector(x, y)).anchorPos(new PVector(x, y)).mass(1).charge(50)
@@ -24,17 +24,19 @@ public class GridPointParticlesController {
                 particles.add(particle);
             }
         }
-        this.externalInteractionBehavior = externalInteractionBehavior;
+        this.externalInteractionBehaviors = externalInteractionBehaviors;
         this.defaultBehaviors = defaultBehaviors;
     }
 
     public void update(RandomParticlesController rpc) {
         for (Particle gp : particles) {
-            externalInteractionBehavior.updateExternal(ParticleSim.singleton.mouse);
-            externalInteractionBehavior.applyTo(gp);
-            for (Particle rp : rpc.particles) {
-                externalInteractionBehavior.updateExternal(rp);
+            for(ExternalInteractionBehavior externalInteractionBehavior : externalInteractionBehaviors) {
+                externalInteractionBehavior.updateExternal(ParticleSim.singleton.mouse);
                 externalInteractionBehavior.applyTo(gp);
+                for (Particle rp : rpc.particles) {
+                    externalInteractionBehavior.updateExternal(rp);
+                    externalInteractionBehavior.applyTo(gp);
+                }
             }
             for (Behavior defaultBehavior : defaultBehaviors) {
                 defaultBehavior.applyTo(gp);

@@ -18,7 +18,8 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     @Setter
     private PVector currPos;
     @Builder.Default
-    private PVector currVel = new PVector(0, 0);
+    @Setter
+    private PVector velocity = new PVector(0, 0);
     @Builder.Default
     @Getter
     private float mass = 1, charge = 1;
@@ -51,7 +52,7 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     }
 
     public PVector getVelocity() {
-        return currVel.copy();
+        return velocity.copy();
     }
 
     public PVector getTargetPosition() {
@@ -62,14 +63,14 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
         }
     }
 
-    public void addForce(PVector f) {
-        force.add(f);
+    public void addForce(PVector vector) {
+        force.add(vector);
     }
 
     public void setPosition() {
         PVector accel = force.div(mass);
-        currVel.add(accel);
-        currPos.add(currVel);
+        velocity.add(accel);
+        currPos.add(velocity);
         force = new PVector(0, 0);
     }
 

@@ -10,7 +10,7 @@ public class SteerableBehavior extends Behavior<Steerable> {
 
     public void applyTo(Steerable body) {
         PVector currPos = body.getCenterOfMassPosition();
-        PVector forceToAdd = body.getTargetPosition().sub(currPos);
-        body.addForce(forceToAdd.mult(0.1f));
+        PVector targetVelocity = body.getTargetPosition().sub(currPos);
+        body.setVelocity(targetVelocity.mult(1));
     }
 }
