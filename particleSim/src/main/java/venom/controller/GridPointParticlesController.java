@@ -1,6 +1,5 @@
 package venom.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import processing.core.PVector;
@@ -11,12 +10,13 @@ import venom.behavior.ExternalInteractionBehavior;
 import venom.colorProvider.WhiteColorProvider;
 import venom.drawer.RocketDrawer;
 
-public class GridPointParticlesController {
-    private final List<ExternalInteractionBehavior> externalInteractionBehaviors;
-    private final List<Behavior> defaultBehaviors;
-    List<Particle> particles = new ArrayList<>();
-
+public class GridPointParticlesController extends ParticlesController {
     public GridPointParticlesController(List<ExternalInteractionBehavior> externalInteractionBehaviors, List<Behavior> defaultBehaviors) {
+        super(externalInteractionBehaviors, defaultBehaviors);
+    }
+
+    @Override
+    protected void initParticles() {
         for (int x = 0; x < ParticleSim.singleton.width; x += 1 / ParticleSim.singleton.res) {
             for (int y = 0; y < ParticleSim.singleton.height; y += 1 / ParticleSim.singleton.res) {
                 Particle particle = Particle.builder().currPos(new PVector(x, y)).anchorPos(new PVector(x, y)).mass(1).charge(50)
@@ -24,10 +24,9 @@ public class GridPointParticlesController {
                 particles.add(particle);
             }
         }
-        this.externalInteractionBehaviors = externalInteractionBehaviors;
-        this.defaultBehaviors = defaultBehaviors;
     }
 
+    @Override
     public void update(RandomParticlesController rpc) {
         for (Particle gp : particles) {
             for(ExternalInteractionBehavior externalInteractionBehavior : externalInteractionBehaviors) {

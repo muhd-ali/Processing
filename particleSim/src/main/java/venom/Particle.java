@@ -4,9 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import processing.core.PVector;
-import venom.colorProvider.ParticleColorProvider;
-import venom.colorProvider.StressColorProvider1;
-import venom.colorProvider.WhiteColorProvider;
+import venom.colorProvider.*;
 import venom.contract.*;
 import venom.drawer.*;
 
@@ -67,6 +65,10 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
         force.add(vector);
     }
 
+    public PVector getHeadingVector() {
+        return getCenterOfMassPosition().sub(getAnchorPosition());
+    }
+
     public void setPosition() {
         PVector accel = force.div(mass);
         velocity.add(accel);
@@ -81,12 +83,12 @@ public class Particle implements LiveDrawable, Moving, Charged, Springed, Steera
     public void draw(Drawer drawer, ColorProvider colorProvider) {
         ParticleSim.singleton.strokeWeight(10);
         ParticleSim.singleton.stroke(255, 255, 255);
-        String mode = "points";
+        String mode = "hair";
         float col1, col2, col3, col4 = 255;
         col2 = (int) ParticleSim.map(getAnchorPosition().x, 0, ParticleSim.singleton.width, 255, 0);
         col3 = (int) ParticleSim.map(getAnchorPosition().y, 0, ParticleSim.singleton.height, 255, 0);
         PVector vector, vector1;
-        ParticleColorProvider colorProvider1 = new StressColorProvider1();
+        ParticleColorProvider colorProvider1 = new ParticleColorProvider2();
         colorProvider1.setDataObject(this);
         switch (mode) {
         case "drawer":

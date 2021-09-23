@@ -56,8 +56,15 @@ public class ParticleSim extends PApplet {
         mouseEventBehavior = new MouseEventBehavior();
         rpc = new RandomParticlesController(0);
         gpc = new GridPointParticlesController(
-            ImmutableList.of(chargedBehavior),
-            ImmutableList.of(springedBehavior, perlinsNoiseBehavior, mouseEventBehavior));
+            ImmutableList.of(
+                chargedBehavior
+            ),
+            ImmutableList.of(
+                springedBehavior,
+                perlinsNoiseBehavior,
+                mouseEventBehavior
+            )
+        );
     }
 
     public void setup() {

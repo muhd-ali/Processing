@@ -1,9 +1,14 @@
 package venom.contract;
 
+import processing.core.PApplet;
 import venom.ParticleSim;
 
 public interface ColorProvider<T> {
-	float col1();
+    default float getColor(float value, float max) {
+        return (int) PApplet.map(value, 0, max, 0, 255);
+    }
+
+    float col1();
 
 	float col2();
 

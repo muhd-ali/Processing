@@ -11,6 +11,6 @@ public class SteerableBehavior extends Behavior<Steerable> {
     public void applyTo(Steerable body) {
         PVector currPos = body.getCenterOfMassPosition();
         PVector targetVelocity = body.getTargetPosition().sub(currPos);
-        body.setVelocity(targetVelocity.mult(1));
+        body.setVelocity(targetVelocity.mult(1f));
     }
 }
